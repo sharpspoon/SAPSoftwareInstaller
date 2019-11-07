@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SAPSoftwareInstallerForm));
             this.Install_ICM_Button = new System.Windows.Forms.Button();
             this.LogRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // Install_ICM_Button
@@ -51,15 +52,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LogRichTextBox.Location = new System.Drawing.Point(181, 12);
             this.LogRichTextBox.Name = "LogRichTextBox";
-            this.LogRichTextBox.Size = new System.Drawing.Size(968, 426);
+            this.LogRichTextBox.ReadOnly = true;
+            this.LogRichTextBox.Size = new System.Drawing.Size(968, 403);
             this.LogRichTextBox.TabIndex = 1;
             this.LogRichTextBox.Text = "";
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBar.Location = new System.Drawing.Point(181, 421);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(968, 23);
+            this.ProgressBar.TabIndex = 2;
             // 
             // SAPSoftwareInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 450);
+            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.LogRichTextBox);
             this.Controls.Add(this.Install_ICM_Button);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -73,6 +86,7 @@
 
         private System.Windows.Forms.Button Install_ICM_Button;
         private System.Windows.Forms.RichTextBox LogRichTextBox;
+        private System.Windows.Forms.ProgressBar ProgressBar;
     }
 }
 
