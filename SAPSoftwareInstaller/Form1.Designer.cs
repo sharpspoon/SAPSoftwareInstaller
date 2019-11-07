@@ -32,12 +32,13 @@
             this.Install_ICM_Button = new System.Windows.Forms.Button();
             this.LogRichTextBox = new System.Windows.Forms.RichTextBox();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
+            this.Install_Docker_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Install_ICM_Button
             // 
             this.Install_ICM_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Install_ICM_Button.Location = new System.Drawing.Point(12, 12);
+            this.Install_ICM_Button.Location = new System.Drawing.Point(12, 64);
             this.Install_ICM_Button.Name = "Install_ICM_Button";
             this.Install_ICM_Button.Size = new System.Drawing.Size(163, 46);
             this.Install_ICM_Button.TabIndex = 0;
@@ -67,11 +68,23 @@
             this.ProgressBar.Size = new System.Drawing.Size(968, 23);
             this.ProgressBar.TabIndex = 2;
             // 
+            // Install_Docker_Button
+            // 
+            this.Install_Docker_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Install_Docker_Button.Location = new System.Drawing.Point(12, 12);
+            this.Install_Docker_Button.Name = "Install_Docker_Button";
+            this.Install_Docker_Button.Size = new System.Drawing.Size(163, 46);
+            this.Install_Docker_Button.TabIndex = 3;
+            this.Install_Docker_Button.Text = "Install Docker";
+            this.Install_Docker_Button.UseVisualStyleBackColor = true;
+            this.Install_Docker_Button.Click += new System.EventHandler(this.Install_Docker_Button_Click);
+            // 
             // SAPSoftwareInstallerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 450);
+            this.Controls.Add(this.Install_Docker_Button);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.LogRichTextBox);
             this.Controls.Add(this.Install_ICM_Button);
@@ -87,6 +100,7 @@
         private System.Windows.Forms.Button Install_ICM_Button;
         private System.Windows.Forms.RichTextBox LogRichTextBox;
         private System.Windows.Forms.ProgressBar ProgressBar;
+        private System.Windows.Forms.Button Install_Docker_Button;
     }
 }
 

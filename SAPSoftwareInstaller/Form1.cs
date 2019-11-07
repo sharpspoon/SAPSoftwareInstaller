@@ -5,8 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using System.Drawing;
 using System.Management.Automation;
 using System.Diagnostics;
 
@@ -24,12 +22,12 @@ namespace SAPSoftwareInstaller
         string dockerfile = "DockerDesktopInstaller.exe";
         string ProcessDir = Environment.CurrentDirectory;
 
-        private void Install_ICM_Button_Click(object sender, EventArgs e)
+        private void Install_Docker_Button_Click(object sender, EventArgs e)
         {
             LogRichTextBox.Clear();
             try
             {
-                System.IO.Directory.CreateDirectory(userDir);
+                Directory.CreateDirectory(userDir);
                 LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
             }
             catch
@@ -37,10 +35,10 @@ namespace SAPSoftwareInstaller
                 LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
                 return;
             }
-            
+
             try
             {
-                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   Creating Directory: \SAPSoftwareInstaller\ICM");
+                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   Creating Directory: " + ProcessDir + @"\SAPSoftwareInstaller\ICM");
                 System.IO.Directory.CreateDirectory(ProcessDir + @"\SAPSoftwareInstaller\ICM");
             }
             catch
@@ -48,21 +46,25 @@ namespace SAPSoftwareInstaller
                 LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   FAILURE - Creating Directory: \SAPSoftwareInstaller\ICM");
                 return;
             }
+            LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   Downloading Docker");
+            using (WebClient wc = new WebClient())
+            {
+                wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+                wc.DownloadFileAsync(
+                    new System.Uri("https://wardr.net/sapsdi/docker/DockerDesktopInstaller.exe"),
+                    // Param2 = Path to save
+                    userDir + @"\" + dockerfile
+                );
+                wc.DownloadFileCompleted += DownloadCompleted;
+            }
+            //ExecuteAsAdmin(userDir + @"\" + dockerfile);//comment this out in prod
+        }
 
-            //LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   Downloading Docker");
-            //using (WebClient wc = new WebClient())
-            //{
-            //    wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-            //    wc.DownloadFileAsync(
-            //        new System.Uri("https://wardr.net/sapsdi/docker/DockerDesktopInstaller.exe"),
-            //        // Param2 = Path to save
-            //        userDir + @"\" + dockerfile
-            //    );
-            //    wc.DownloadFileCompleted += DownloadCompleted;
-            //}
-
-
-            ExecuteAsAdmin(userDir + @"\" + dockerfile);//comment this out in prod
+        private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Downloading Docker....Done.");
+            MessageBox.Show("The Docker installer will now launch. Please continue with default settings.");
+            ExecuteAsAdmin(userDir + @"\" + dockerfile);
         }
 
         public void ExecuteAsAdmin(string fileName)
@@ -83,27 +85,34 @@ namespace SAPSoftwareInstaller
             proc.StartInfo.UseShellExecute = true;
             proc.StartInfo.Verb = "runas";
             proc.Start();
-            ProcessFolder();
         }
 
-        private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        private void Install_ICM_Button_Click(object sender, EventArgs e)
         {
-            LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Downloading Docker....Done.");
-
-            MessageBox.Show("The Docker installer will now launch. Please continue with default settings");
-            ExecuteAsAdmin(userDir + @"\" + dockerfile);
-
-            //string DOCKERINSTALLPath = userDir + @"\DOCKERINSTALL.cmd";
-            //using (FileStream fs = new FileStream(DOCKERINSTALLPath, FileMode.OpenOrCreate))
-            //{
-            //    using (TextWriter tw = new StreamWriter(fs))
-            //    {
-            //        tw.WriteLine(@"DockerDesktopInstaller.exe");
-            //    }
-            //    System.Diagnostics.Process.Start(DOCKERINSTALLPath);
-            //}
-            //ProcessFolder(user, userDir, dockerfile);
+            LogRichTextBox.Clear();
+            try
+            {
+                Directory.CreateDirectory(userDir);
+                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
+            }
+            catch
+            {
+                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
+                return;
+            }
+            
+            try
+            {
+                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   Creating Directory: "+ProcessDir+@"\SAPSoftwareInstaller\ICM");
+                System.IO.Directory.CreateDirectory(ProcessDir + @"\SAPSoftwareInstaller\ICM");
+            }
+            catch
+            {
+                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   FAILURE - Creating Directory: \SAPSoftwareInstaller\ICM");
+                return;
+            }
         }
+
         private void ProcessFolder()
         {
             string RUNPath = ProcessDir + @"\SAPSoftwareInstaller\ICM\RUN.cmd";
