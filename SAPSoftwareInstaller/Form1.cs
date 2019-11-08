@@ -24,6 +24,11 @@ namespace SAPSoftwareInstaller
 
         private void Install_Docker_Button_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("You are about to install and run Docker. Only do this if you do not already have Docker. Continue?", "SAP Software Installer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
             LogRichTextBox.Clear();
             try
             {
@@ -100,6 +105,11 @@ namespace SAPSoftwareInstaller
 
         private void Install_ICM_Button_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Only continue once you verify Docker is running. You can verify this in the bottom right task window. Continue?", "SAP Software Installer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
             LogRichTextBox.Clear();
             try
             {
