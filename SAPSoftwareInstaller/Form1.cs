@@ -87,6 +87,17 @@ namespace SAPSoftwareInstaller
             proc.Start();
         }
 
+        public void BuildImagesAsAdmin(string ImageName)
+        {
+            Process proc = new Process();
+            proc.StartInfo.FileName = ImageName;
+            proc.StartInfo.UseShellExecute = true;
+            proc.StartInfo.Verb = "runas";
+            proc.Start();
+            proc.WaitForExit();
+            StartDockerAsAdmin(@"C:\Program Files\Docker\Docker\Docker Desktop.exe");
+        }
+
         private void Install_ICM_Button_Click(object sender, EventArgs e)
         {
             LogRichTextBox.Clear();
@@ -111,6 +122,22 @@ namespace SAPSoftwareInstaller
                 LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>   FAILURE - Creating Directory: \SAPSoftwareInstaller\ICM");
                 return;
             }
+
+            string BuildImagesPath = ProcessDir + @"\SAPSoftwareInstaller\ICM\BuildImages.cmd";
+            using (FileStream fs = new FileStream(BuildImagesPath, FileMode.OpenOrCreate))
+            {
+                using (TextWriter tw = new StreamWriter(fs))
+                {
+                    tw.WriteLine(@"docker build -t icm:1908 \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SAPSoftwareInstaller\images\icm");
+                    tw.WriteLine(@"docker build -t sql \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SAPSoftwareInstaller\images\sql");
+                    tw.WriteLine(@"docker network create --driver=bridge icm-sql");
+                    tw.WriteLine(@"start \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SQL.cmd");
+                    tw.WriteLine(@"start \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\ICM.cmd");
+                    Process.Start("http://localhost/ICM");
+                    //tw.WriteLine("pause");
+                }
+                Process.Start(BuildImagesPath);
+            }
         }
 
         private void ProcessFolder()
@@ -118,6 +145,9 @@ namespace SAPSoftwareInstaller
             string RUNPath = ProcessDir + @"\SAPSoftwareInstaller\ICM\RUN.cmd";
             string ICMPath = ProcessDir + @"\SAPSoftwareInstaller\ICM\ICM.cmd";
             string SQLPath = ProcessDir + @"\SAPSoftwareInstaller\ICM\SQL.cmd";
+
+
+
             using (FileStream fs = new FileStream(ICMPath, FileMode.OpenOrCreate))
             {
                 using (TextWriter tw = new StreamWriter(fs))
@@ -144,7 +174,7 @@ namespace SAPSoftwareInstaller
                     tw.WriteLine("start %~dp0SQL.cmd");
                     tw.WriteLine("start %~dp0ICM.cmd");
                 }
-                System.Diagnostics.Process.Start(RUNPath);
+                Process.Start(RUNPath);
             }
 
             //LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + @">>>  inside of process file");
