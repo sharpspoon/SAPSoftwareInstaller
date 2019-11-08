@@ -140,7 +140,7 @@ namespace SAPSoftwareInstaller
                 {
                     tw.WriteLine(@"docker build -t icm:1908 \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SAPSoftwareInstaller\images\icm");
                     tw.WriteLine(@"docker build -t sql \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SAPSoftwareInstaller\images\sql");
-                    tw.WriteLine(@"docker network create --driver=bridge icm-sql");
+                    tw.WriteLine(@"docker network create --subnet=172.18.0.0/16 --driver=bridge icm-sql");
                     tw.WriteLine(@"start \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\SQL.cmd");
                     tw.WriteLine(@"start \\USPHLG104.phl.global.corp.sap\BHMSpecialProjects\Docker\ICM.cmd");
                     Process.Start("http://localhost/ICM");
