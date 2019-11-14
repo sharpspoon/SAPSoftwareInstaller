@@ -18,7 +18,7 @@ namespace SAPSoftwareInstaller
         }
 
         string user = Environment.UserName;
-        string userDir = @"C:\Users\" + Environment.UserName + @"\SAPSITemp";
+        //string userDir = @"C:\Users\" + Environment.UserName + @"\SAPSITemp";
         string dockerfile = "DockerDesktopInstaller.exe";
         string ProcessDir = Environment.CurrentDirectory;
 
@@ -30,16 +30,16 @@ namespace SAPSoftwareInstaller
                 return;
             }
             LogRichTextBox.Clear();
-            try
-            {
-                Directory.CreateDirectory(userDir);
-                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
-            }
-            catch
-            {
-                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
-                return;
-            }
+            //try
+            //{
+            //    Directory.CreateDirectory(userDir);
+            //    LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
+            //}
+            //catch
+            //{
+            //    LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
+            //    return;
+            //}
 
             try
             {
@@ -58,7 +58,7 @@ namespace SAPSoftwareInstaller
                 wc.DownloadFileAsync(
                     new System.Uri("https://wardr.net/sapsdi/docker/DockerDesktopInstaller.exe"),
                     // Param2 = Path to save
-                    userDir + @"\" + dockerfile
+                    ProcessDir + @"\" + dockerfile
                 );
                 wc.DownloadFileCompleted += DownloadCompleted;
             }
@@ -69,7 +69,7 @@ namespace SAPSoftwareInstaller
         {
             LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Downloading Docker....Done.");
             MessageBox.Show("The Docker installer will now launch. Please continue with default settings.");
-            ExecuteAsAdmin(userDir + @"\" + dockerfile);
+            ExecuteAsAdmin(ProcessDir + @"\" + dockerfile);
         }
 
         public void ExecuteAsAdmin(string fileName)
@@ -111,16 +111,16 @@ namespace SAPSoftwareInstaller
                 return;
             }
             LogRichTextBox.Clear();
-            try
-            {
-                Directory.CreateDirectory(userDir);
-                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
-            }
-            catch
-            {
-                LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
-                return;
-            }
+            //try
+            //{
+            //    Directory.CreateDirectory(userDir);
+            //    LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Done.");
+            //}
+            //catch
+            //{
+            //    LogRichTextBox.Text = LogRichTextBox.Text.Insert(0, Environment.NewLine + DateTime.Now + ">>>   Creating temp directory: " + userDir + " ...Failed.");
+            //    return;
+            //}
             
             try
             {
