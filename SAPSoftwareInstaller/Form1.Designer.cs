@@ -37,7 +37,7 @@
             // 
             // Install_ICM_Button
             // 
-            this.Install_ICM_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Install_ICM_Button.Font = new System.Drawing.Font("BentonSans Book", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Install_ICM_Button.Location = new System.Drawing.Point(12, 64);
             this.Install_ICM_Button.Name = "Install_ICM_Button";
             this.Install_ICM_Button.Size = new System.Drawing.Size(163, 46);
@@ -70,7 +70,7 @@
             // 
             // Install_Docker_Button
             // 
-            this.Install_Docker_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Install_Docker_Button.Font = new System.Drawing.Font("BentonSans Book", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Install_Docker_Button.Location = new System.Drawing.Point(12, 12);
             this.Install_Docker_Button.Name = "Install_Docker_Button";
             this.Install_Docker_Button.Size = new System.Drawing.Size(163, 46);
